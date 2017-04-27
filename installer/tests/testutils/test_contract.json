@@ -1,0 +1,29 @@
+{
+   "Reservations": [
+      {
+         "ReservationId": "r-022da345a9d082aee",
+         "Ebs": [
+            {
+               "VolumeId": "vol-0614537fb321b58ab",
+               "size": "30",
+               "iops": "100",
+               "volumeType": "gp2"
+            }
+         ],
+         "Instances": [
+            {
+               "State": {
+                  "Code": 16,
+                  "Name": "running"
+               },
+               "InstanceId": "i-06de3bd1aad991334",
+               "InstanceType": "t2.medium",
+               "ImageId": "ami-fcc4539c"
+            }
+         ],
+         "Placement": {
+            "AvailabilityZone": "us-west-2b"
+         }
+      }
+   ]
+}

@@ -36,12 +36,11 @@ func GetAWSClient() *ec2.EC2 {
 func GetAwsInstances() (*ec2.DescribeInstancesOutput, error) {
 
 	client := GetAWSClient()
-
 	params := &ec2.DescribeInstancesInput{
 		Filters: []*ec2.Filter{
 			{
 				Name:   aws.String("instance-state-name"),
-				Values: []*string{aws.String("running"), aws.String("pending")},
+					Values: []*string{aws.String("running"), aws.String("pending")},
 			},
 			{
 				Name: 	aws.String("tag:KubernetesCluster"),
@@ -50,10 +49,6 @@ func GetAwsInstances() (*ec2.DescribeInstancesOutput, error) {
 		},
 	}
 	resp, err := client.DescribeInstances(params)
-
-	if err != nil {
-		log.Fatalf("there was an error listing instances in %s", err.Error())
-	}
 
 	return resp, err
 
@@ -78,10 +73,6 @@ func GetAwsVolumes() (*ec2.DescribeVolumesOutput, error) {
 	}
 
 	resp, err := client.DescribeVolumes(volumeParams)
-	if err != nil {
-		log.Fatalf("There was an error listing volumes in %s", err.Error())
-
-	}
 
 	return resp, err
 
