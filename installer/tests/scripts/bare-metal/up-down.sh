@@ -2,21 +2,14 @@
 set -e pipefail
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ROOT="$DIR/../../.."
+ROOT="$DIR/../../../.."
 
 export VM_MEMORY='2048'
 export ASSETS_DIR="${ASSETS_DIR:-$GOPATH/src/github.com/coreos/matchbox/examples/assets}"
 MATCHBOX_SHA=9a3347f1b5046c231f089374b63defb800b04079
-INSTALLER_BIN=${INSTALLER_BIN:-"$ROOT/bin/linux/installer"}
 SANITY_BIN=${SANITY_BIN:="$ROOT/bin/sanity"}
-CLUSTER_CREATE="http://127.0.0.1:4444/cluster/create"
 
 main() {
-  if [ -z "$TECTONIC_LICENSE" ] || [ -z "$TECTONIC_PULL_SECRET" ];then
-      echo "Must export both \$TECTONIC_LICENSE and \$TECTONIC_PULL_SECRET"
-      return 1
-  fi
-
   TEMP=$(mktemp -d)
   echo "Creating $TEMP"
 
@@ -37,23 +30,21 @@ main() {
   sudo -S -E ./scripts/devnet create
   popd
 
-  echo "Starting Tectonic Installer"
-  ${INSTALLER_BIN} -log-level=debug -open-browser=false & INSTALLER_PID=$!
-  sleep 2
+  echo "Waiting for matchbox to be ready"
+  sleep 10
 
-  echo "Writing configuration"
-  cp ${ROOT}/examples/metal.json ${TEMP}/metal.json
-  sed -i "s/<TECTONIC_LICENSE>/${TECTONIC_LICENSE}/" ${TEMP}/metal.json
-  sed -i "s/<TECTONIC_PULL_SECRET>/$(echo ${TECTONIC_PULL_SECRET} | sed 's/\\/\\\\/g')/" ${TEMP}/metal.json
+  echo "Starting terraform"
+  (cd ${WORKSPACE} && make apply) &
 
-  echo "Submitting to Tectonic Installer"
-  curl -H "Content-Type: application/json" -X POST -d @${TEMP}/metal.json ${CLUSTER_CREATE} -o $TEMP/assets.zip
-  unzip $TEMP/assets.zip -d $TEMP
+  echo "Waiting for terraform to be ready"
+  sleep 15
 
   echo "Starting QEMU/KVM nodes"
   pushd matchbox
   sudo -E ./scripts/libvirt create
   popd
+
+  fg
 
   until kubelet "node1.example.com" \
     && kubelet "node2.example.com" \
