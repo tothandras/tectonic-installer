@@ -67,6 +67,7 @@ pipeline {
 
                   ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars
 
+                  export ASSETS_DIR=~/assets
                   cd installer
                   ./tests/scripts/bare-metal/up-down.sh
                 '''
