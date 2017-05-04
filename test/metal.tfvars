@@ -109,7 +109,7 @@ tectonic_metal_worker_macs = ["52:54:00:b2:2f:86", "52:54:00:c3:61:77"]
 tectonic_metal_controller_domain = "cluster.example.com"
 tectonic_metal_ingress_domain = "tectonic.example.com"
 
-tectonic_ssh_authorized_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCt3BebCHqnSsgpLjo4kVvyfY/z2BS8t27r/7du+O2pb4xYkr7n+KFpbOz523vMTpQ+o1jY4u4TgexglyT9nqasWgLOvo1qjD1agHme8LlTPQSk07rXqOB85Uq5p7ig2zoOejF6qXhcc3n1c7+HkxHrgpBENjLVHOBpzPBIAHkAGaZcl07OCqbsG5yxqEmSGiAlh/IiUVOZgdDMaGjCRFy0wk0mQaGD66DmnFc1H5CzcPjsxr0qO65e7lTGsE930KkO1Vc+RHCVwvhdXs+c2NhJ2/3740Kpes9n1/YullaWZUzlCPDXtRuy6JRbFbvy39JUgHWGWzB3d+3f8oJ/N4qZ cardno:000603633110"
+tectonic_ssh_authorized_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPQFdwVLr+alsWIgYRz9OdqDhnx9jjuFbkdSdpqq4gd9uZApYlivMDD4UgjFazQpezx8DiNhu9ym7i6LgAcdwi+10hE4L9yoJv9uBgbBxOAd65znqLqF91NtV4mlKP5YfJtR7Ehs+pTB+IIC+o5veDbPn+BYgDMJ2x7Osbn1/gFSDken/yoOFbYbRMGMfVEQYjJzC4r/qCKH0bl/xuVNLxf9FkWSTCcQFKGOndwuGITDkshD4r2Kk8gUddXPxoahBv33/2QH0CY5zbKYjhgN6I6WtwO+O1uJwtNeV1AGhYjurdd60qggNwx+W7623uK3nIXvJd3hzDO8u5oa53/tIL fake-test-key"
 
 # Tectonic
 
