@@ -53,7 +53,8 @@ pipeline {
                 checkout scm
                 unstash 'installer'
                 unstash 'sanity'
-                sh '''#!/bin/bash -e
+                sh '''
+                  #!/bin/bash -e
                   set -x
 
                   export PLATFORM=metal
@@ -66,7 +67,7 @@ pipeline {
                   # Create local config
                   make localconfig
 
-                  ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars
+                  ln -sf "${WORKSPACE}/test/metal.tfvars" "${WORKSPACE}/build/${CLUSTER}/terraform.tfvars"
 
                   make plan
 
