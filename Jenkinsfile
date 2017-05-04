@@ -57,16 +57,11 @@ pipeline {
 
                   export PLATFORM=metal
                   export CLUSTER="tf-${PLATFORM}-${BRANCH_NAME}-${BUILD_ID}"
-                  export INSTALLER_PATH=${WORKSPACE}/installer/bin/linux/installer
-
-                  sed "s|<PATH_TO_INSTALLER>|$INSTALLER_PATH|g" terraformrc.example > .terraformrc
-                  export TERRAFORM_CONFIG=${WORKSPACE}/.terraformrc
 
                   # Create local config
                   make localconfig
 
                   ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars
-
 
                   # lowercase cluster names
                   export TF_VAR_tectonic_cluster_name=$(echo ${CLUSTER} | awk '{print tolower($0)}')
