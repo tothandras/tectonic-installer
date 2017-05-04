@@ -36,7 +36,6 @@ pipeline {
         GO_PROJECT = '/go/src/github.com/coreos/tectonic-installer'
       }
       steps {
-        """
         stash name: 'installer', includes: 'installer/bin/linux/installer'
         stash name: 'sanity', includes: 'installer/bin/sanity'
         }
