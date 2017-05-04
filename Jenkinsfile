@@ -36,6 +36,8 @@ pipeline {
         GO_PROJECT = '/go/src/github.com/coreos/tectonic-installer'
       }
       steps {
+        sh "mkdir -p ${WORKSPACE}/installer/bin/linux"
+        sh "cp /go/installer/bin/linux/installer ${WORKSPACE}/installer/bin/linux/installer"
         stash name: 'installer', includes: 'installer/bin/linux/installer'
         stash name: 'sanity', includes: 'installer/bin/sanity'
         }
