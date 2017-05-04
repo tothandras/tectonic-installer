@@ -75,6 +75,8 @@ pipeline {
                   # Create local config
                   make localconfig
 
+                  make plan
+
                   # Use smoke test configuration for deployment
                   ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars
 
