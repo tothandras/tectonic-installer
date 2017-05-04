@@ -6,7 +6,6 @@ ROOT="$DIR/../../../.."
 
 export VM_MEMORY='2048'
 export ASSETS_DIR="${ASSETS_DIR:-$GOPATH/src/github.com/coreos/matchbox/examples/assets}"
-export ASSETS_DIR=~/assets
 MATCHBOX_SHA=9a3347f1b5046c231f089374b63defb800b04079
 SANITY_BIN=${SANITY_BIN:="$ROOT/bin/sanity"}
 
