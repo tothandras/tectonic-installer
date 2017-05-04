@@ -58,10 +58,7 @@ pipeline {
                   export PLATFORM=metal
                   export CLUSTER="tf-${PLATFORM}-${BRANCH_NAME}-${BUILD_ID}"
 
-                  rm -rf .terraformrc
-
                   export TF_VAR_tectonic_cluster_name=$(echo ${CLUSTER} | awk '{print tolower($0)}')
-
 
                   # make core utils accessible to make
                   export PATH=/bin:${PATH}
@@ -75,6 +72,8 @@ pipeline {
                   cat ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars || true
 
                   # lowercase cluster names
+
+                  cat .terraformrc || true
 
                   make plan
 
