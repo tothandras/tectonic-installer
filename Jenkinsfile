@@ -67,7 +67,7 @@ pipeline {
                   # Create local config
                   make localconfig
 
-                  ln -sf "${WORKSPACE}/test/metal.tfvars" "${WORKSPACE}/build/${CLUSTER}/terraform.tfvars"
+                  ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/\${CLUSTER}/terraform.tfvars
 
                   make plan
 
