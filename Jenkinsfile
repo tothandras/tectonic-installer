@@ -105,4 +105,11 @@ pipeline {
       }
     }
   }
+  post {
+    always {
+      sh "pwd && ls -la"
+      deleteDir()
+      sh "pwd && ls -la"
+    }
+  }
 }
