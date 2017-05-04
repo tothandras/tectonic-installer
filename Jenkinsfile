@@ -61,7 +61,15 @@ pipeline {
                   # Create local config
                   make localconfig
 
+                  ls -la ${WORKSPACE}/build/${CLUSTER}
+                  cat ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars || true
+
                   ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars
+
+                  ls -la ${WORKSPACE}/build/${CLUSTER}
+                  cat ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars || true
+
+                  ls -la ${WORKSPACE}/build
 
                   # lowercase cluster names
                   export TF_VAR_tectonic_cluster_name=$(echo ${CLUSTER} | awk '{print tolower($0)}')
