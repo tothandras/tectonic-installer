@@ -44,8 +44,6 @@ main() {
   sudo -E ./scripts/libvirt create
   popd
 
-  fg
-
   until kubelet "node1.example.com" \
     && kubelet "node2.example.com" \
     && kubelet "node3.example.com"
