@@ -63,7 +63,8 @@ pipeline {
                 checkout scm
                 unstash 'installer'
                 unstash 'sanity'
-                sh '''#!/bin/bash -e -x
+                sh '''#!/bin/bash -e
+                  set -x
 
                   export PLATFORM=metal
                   export CLUSTER="tf-${PLATFORM}-${BRANCH_NAME}-${BUILD_ID}"
