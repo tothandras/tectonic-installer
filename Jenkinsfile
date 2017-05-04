@@ -28,7 +28,7 @@ pipeline {
     stage('Installer: Build & Test') {
       agent {
           docker {
-            image 'quay.io/coreos/tectonic-builder:v1.7'
+            image 'quay.io/dan_gillespie/tectonic-builder:v1'
             label 'worker'
           }
       }
@@ -36,16 +36,6 @@ pipeline {
         GO_PROJECT = '/go/src/github.com/coreos/tectonic-installer'
       }
       steps {
-        checkout scm
-        sh "mkdir -p \$(dirname $GO_PROJECT) && ln -sf $WORKSPACE $GO_PROJECT"
-        sh "go get github.com/golang/lint/golint"
-        sh """#!/bin/bash -ex
-        go version
-        cd $GO_PROJECT/installer
-
-        make clean
-        make tools
-        make build
         """
         stash name: 'installer', includes: 'installer/bin/linux/installer'
         stash name: 'sanity', includes: 'installer/bin/sanity'
