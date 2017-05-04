@@ -39,7 +39,6 @@ pipeline {
         sh "mkdir -p ${WORKSPACE}/installer/bin/linux"
         sh "cp /go/installer/bin/linux/installer ${WORKSPACE}/installer/bin/linux/installer"
         stash name: 'installer', includes: 'installer/bin/linux/installer'
-        stash name: 'sanity', includes: 'installer/bin/sanity'
         }
       }
       stage("Smoke Tests") {
@@ -53,7 +52,6 @@ pipeline {
                           ]) {
                 checkout scm
                 unstash 'installer'
-                unstash 'sanity'
                 sh '''
                   #!/bin/bash -e
 
