@@ -75,8 +75,6 @@ pipeline {
 
                   cat .terraformrc || true
 
-                  make plan
-
                   cd installer
 
                   ./tests/scripts/bare-metal/up-down.sh
