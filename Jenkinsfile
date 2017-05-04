@@ -55,28 +55,19 @@ pipeline {
                 sh '''
                   #!/bin/bash -e
 
+                  set -x
+
                   export PLATFORM=metal
                   export CLUSTER="tf-${PLATFORM}-${BRANCH_NAME}-${BUILD_ID}"
 
                   export TF_VAR_tectonic_cluster_name=$(echo ${CLUSTER} | awk '{print tolower($0)}')
-
-                  # make core utils accessible to make
-                  export PATH=/bin:${PATH}
 
                   # Create local config
                   make localconfig
 
                   ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars
 
-                  ls -la ${WORKSPACE}/build/${CLUSTER}
-                  cat ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars || true
-
-                  # lowercase cluster names
-
-                  cat .terraformrc || true
-
                   cd installer
-
                   ./tests/scripts/bare-metal/up-down.sh
                 '''
               }
