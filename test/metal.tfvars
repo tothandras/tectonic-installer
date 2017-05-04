@@ -133,6 +133,6 @@ EOD
 
 # Common variables are not actually cross-platform
 tectonic_base_domain = "unused"
-tectonic_master_count = 0
-tectonic_worker_count = 0
+tectonic_master_count = 1
+tectonic_worker_count = 2
 tectonic_etcd_count = 0
