@@ -55,7 +55,6 @@ pipeline {
                 unstash 'sanity'
                 sh '''
                   #!/bin/bash -e
-                  set -x
 
                   export PLATFORM=metal
                   export CLUSTER="tf-${PLATFORM}-${BRANCH_NAME}-${BUILD_ID}"
@@ -67,7 +66,7 @@ pipeline {
                   # Create local config
                   make localconfig
 
-                  ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/\${CLUSTER}/terraform.tfvars
+                  ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars
 
                   make plan
 
