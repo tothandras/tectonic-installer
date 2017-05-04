@@ -34,7 +34,7 @@ main() {
   sleep 10
 
   echo "Starting terraform"
-  (cd ${ROOT}/.. && make apply) &
+  (cd ${WORKSPACE} && make apply) &
 
   echo "Waiting for terraform to be ready"
   sleep 15
