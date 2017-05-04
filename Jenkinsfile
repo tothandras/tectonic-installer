@@ -67,10 +67,12 @@ pipeline {
 
                   ln -sf ${WORKSPACE}/test/metal.tfvars ${WORKSPACE}/build/${CLUSTER}/terraform.tfvars
 
-                  make plan
 
                   # lowercase cluster names
                   export TF_VAR_tectonic_cluster_name=$(echo ${CLUSTER} | awk '{print tolower($0)}')
+
+                  make plan
+
                   cd installer
 
                   ./tests/scripts/bare-metal/up-down.sh
