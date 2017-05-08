@@ -61,8 +61,6 @@ main() {
     echo "Waiting for Kubelets to start..."
   done
 
-  ssh core@node1.example.com 'sudo systemctl start bootkube'
-
   until [[ "$(readyNodes)" == "3" ]]; do
     sleep 5
     echo "$(readyNodes) of 3 nodes are Ready..."
@@ -116,7 +114,7 @@ ssh() {
 }
 
 k8s() {
-  ${ROOT}/bin/kubectl --kubeconfig=${TEMP}/assets/auth/kubeconfig "$@"
+  kubectl --kubeconfig=${TEMP}/assets/auth/kubeconfig "$@"
 }
 
 # ready nodes returns the number of Ready Kubernetes nodes
