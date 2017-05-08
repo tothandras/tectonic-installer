@@ -2,7 +2,7 @@
 set -e pipefail
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ROOT="$DIR/../../../.."
+ROOT="$DIR/../../.."
 
 export VM_MEMORY='2048'
 export ASSETS_DIR="${ASSETS_DIR:-$GOPATH/src/github.com/coreos/matchbox/examples/assets}"
@@ -114,7 +114,7 @@ ssh() {
 }
 
 k8s() {
-  kubectl --kubeconfig=${TEMP}/assets/auth/kubeconfig "$@"
+  kubectl --kubeconfig=${ROOT}/../build/${CLUSTER}/generated/auth/kubeconfig "$@"
 }
 
 # ready nodes returns the number of Ready Kubernetes nodes
