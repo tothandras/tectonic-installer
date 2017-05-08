@@ -13,12 +13,20 @@ main() {
   TEMP=$(mktemp -d)
   echo "Creating $TEMP"
 
+  echo "Configuring ssh-agent"
+  eval `ssh-agent -s`
+
   echo "Getting matchbox"
   rm -rf matchbox
   git clone https://github.com/coreos/matchbox
   pushd matchbox
   git checkout $MATCHBOX_SHA
   chmod 600 tests/smoke/fake_rsa
+
+  echo "Adding testing key to ssh-agent"
+  ssh-add tests/smoke/fake_rsa
+  ssh-add -L
+
   popd
   cp examples/fake-creds/{ca.crt,server.crt,server.key} matchbox/examples/etc/matchbox
 
