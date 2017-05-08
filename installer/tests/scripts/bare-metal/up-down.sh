@@ -35,6 +35,7 @@ main() {
 
   echo "Starting matchbox"
   pushd matchbox
+  export VM_MEMORY=2048
   sudo -S -E ./scripts/devnet create
   popd
 
