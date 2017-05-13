@@ -4,12 +4,7 @@
 3. CoreOS does not ship with `make`, so Docker builds still have to use small scripts.
 */
 pipeline {
-  agent {
-    docker {
-      image 'quay.io/coreos/tectonic-builder:v1.7'
-      label 'worker'
-    }
-  }
+  agent none
 
   options {
     timeout(time:35, unit:'MINUTES')
@@ -96,34 +91,37 @@ pipeline {
         )
       }
     }
-  }
-  post {
-    always {
-      checkout scm
-
-      withCredentials([file(credentialsId: 'tectonic-license', variable: 'TF_VAR_tectonic_pull_secret_path'),
-                       file(credentialsId: 'tectonic-pull', variable: 'TF_VAR_tectonic_license_path'),
-                       [
-                         $class: 'UsernamePasswordMultiBinding',
-                         credentialsId: 'tectonic-aws',
-                         usernameVariable: 'AWS_ACCESS_KEY_ID',
-                         passwordVariable: 'AWS_SECRET_ACCESS_KEY'
-                       ]
-                       ]) {
-        // Destroy all clusters within workspace
-        unstash 'installer'
-        sh '''
-          for c in ${WORKSPACE}/build/*; do
-            export CLUSTER=$(basename ${c})
-            export TF_VAR_tectonic_cluster_name=$(echo ${CLUSTER} | awk '{print tolower($0)}')
-
-            echo "Destroying ${CLUSTER}..."
-            make destroy || true
-          done
-        '''
+    stage("Cleanup") {
+      agent {
+        docker {
+          image 'quay.io/coreos/tectonic-builder:v1.7'
+          label 'worker'
+          reuseNode true
+        }
       }
-      // Cleanup workspace
-      deleteDir()
+      post {
+        always {
+          checkout scm
+
+          withCredentials([file(credentialsId: 'tectonic-license', variable: 'TF_VAR_tectonic_pull_secret_path'),
+                           file(credentialsId: 'tectonic-pull', variable: 'TF_VAR_tectonic_license_path'),
+                           [
+                             $class: 'UsernamePasswordMultiBinding',
+                           credentialsId: 'tectonic-aws',
+                           usernameVariable: 'AWS_ACCESS_KEY_ID',
+                           passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                         ]
+                         ]) {
+            unstash 'installer'
+
+            // Destroy all clusters within workspace
+            sh '${WORKSPACE}/tests/destroy-clusters.sh'
+
+            // Cleanup workspace
+            deleteDir()
+          }
+        }
+      }
     }
   }
 }
